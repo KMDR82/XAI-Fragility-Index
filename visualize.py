@@ -16,7 +16,7 @@ PRIMARY_CSV_PATH = '/kaggle/input/datasets/aakkaya/full_experiment_results_xfi.c
 FALLBACK_CSV_PATH = 'full_experiment_results_xfi.csv'
 OUTPUT_DIR = 'figures'
 
-# Q1 Academic Journal Styling Standards
+# Academic Journal Styling Standards
 sns.set_theme(style="whitegrid")
 plt.rcParams.update({
     'figure.dpi': 300,             
