@@ -1,0 +1,10 @@
+torch>=2.0.0
+torchvision>=0.15.0
+numpy
+pandas
+opencv-python
+pydicom
+scikit-learn
+scipy
+scikit-image
+grad-cam
