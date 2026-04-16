@@ -3,7 +3,7 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.19604732)
+[![DOI](https://zenodo.org/badge/1212214151.svg)](https://doi.org/10.5281/zenodo.19604732)
 
 ## 1. Description
 This repository contains the official codebase and implementation for the paper: **"Quantifying the Structural Fragility of Explainable Artificial Intelligence in Medical Imaging: A Novel Index for Assessing Heatmap Stability"**. 
@@ -54,7 +54,7 @@ python main.py
 If you use this dataset, codebase, or the XFI metric in your research, please cite our paper (currently under review) and the Zenodo archive:
 
 > A. Akkaya, "Quantifying the Structural Fragility of Explainable Artificial Intelligence in Medical Imaging: A Novel Index for Assessing Heatmap Stability", *Submitted for publication*, 2026. 
-> Code archive: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19604732.svg)](https://doi.org/10.5281/zenodo.19604732)
+> Code archive: [![DOI](https://zenodo.org/badge/1212214151.svg)](https://doi.org/10.5281/zenodo.19604732)
 
 *(Note: The full citation details will be updated upon the paper's acceptance and publication).*
 
