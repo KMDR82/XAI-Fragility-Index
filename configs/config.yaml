@@ -1,0 +1,54 @@
+# Central configuration for the R1 revision. Every script and notebook reads this file.
+# Paths are relative to the repository root unless absolute.
+
+project:
+  name: XFI-revision-r1
+  seed: 42
+
+paths:
+  dataset_dir: dataset/rsna                       # contains stage_2_train_labels.csv and stage_2_train_images/
+  labels_csv: dataset/rsna/stage_2_train_labels.csv
+  image_dir: dataset/rsna/stage_2_train_images
+  model_dir: model
+  model_a_weights: model/modelA_kaggle_v1.pth
+  output_dir: output
+  fig_dir: fig
+  v1_legacy_csv: output/v1_legacy/full_experiment_results_xfi.csv
+  phase0_out: output/phase0
+  # Set this to the Google Drive for desktop folder as seen from WSL, e.g.
+  # /mnt/c/Users/<windows_user>/My Drive/XFI_revision_r1
+  drive_backup_dir: "/mnt/g/Drive'ım/XFI_revision_r1"
+
+split:                     # D-05: identical to v1
+  test_size: 0.2
+  random_state: 42
+  expected_test_patients: 5337
+  expected_test_positives: 1229
+
+image:
+  size: 224
+  orig_size: 1024          # RSNA images are 1024 x 1024; verified in 00_env_check
+
+model_a:                   # D-06: submitted weights, not retrained
+  arch: resnet50
+  pretrained: false
+  imagenet_norm: false
+  threshold_default: 0.5
+
+perturbations:             # D-10: v1 parameters, Gaussian noise as 2-D field replicated to 3 channels
+  levels: [1, 2, 3]
+  gaussian_sigma_per_level: 0.1
+  blur_kernel: "2*L+1"
+  saltpepper_amount_per_level: 0.01
+
+xai:
+  methods: [GradCAM, EigenCAM]
+  target_layer: layer4[-1]
+  grad_cam_version: "1.5.7"
+
+metrics:
+  iou_rel_thresholds: [0.80, 0.90]
+  iou_abs_thresholds: [0.5, 0.7]
+  far_abs_thresholds: [0.5, 0.7]     # D-03
+  bootstrap_B: 2000
+  alpha: 0.05
