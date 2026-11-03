@@ -123,6 +123,8 @@ def main(argv=None):
     def log(msg):
         line = f"{datetime.now():%Y-%m-%d %H:%M:%S} [xfi {a.model}] {msg}"; print(line, flush=True); logf.write(line + "\n"); logf.flush()
 
+    from threadpoolctl import threadpool_limits
+    threadpool_limits(8); torch.set_num_threads(8)        # leave the other cores to the metric workers
     torch.manual_seed(seed); np.random.seed(seed)
     torch.backends.cudnn.deterministic = True; torch.backends.cudnn.benchmark = False
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

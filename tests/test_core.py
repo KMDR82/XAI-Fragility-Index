@@ -116,10 +116,16 @@ def test_input_quality():
 
 
 # ------------------------------------------------------------------ XAI helpers
-def test_signed_projection_matches_library():
-    from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
-    acts = rng.normal(size=(2, 64, 7, 7)).astype(np.float32)
-    assert np.allclose(X.signed_projection(acts), get_2d_projection(acts), atol=1e-4)
+def test_signed_projection_matches_library_full_svd():
+    for k in range(5):
+        acts = np.maximum(rng.normal(size=(3, 2048, 7, 7)), 0).astype(np.float32)
+        assert np.allclose(X.signed_projection(acts), X.LIBRARY_GET_2D_PROJECTION(acts), atol=1e-4)
+        assert np.allclose(X.signed_projection_sign_corrected(acts), X.LIBRARY_GET_2D_PROJECTION_SC(acts), atol=1e-4)
+
+
+def test_eigencam_uses_fast_projection():
+    import pytorch_grad_cam.eigen_cam as ec
+    assert ec.get_2d_projection is X.signed_projection
 
 
 def _tiny_resnet():

@@ -10,23 +10,42 @@ import torch
 import torch.nn as nn
 from pytorch_grad_cam import GradCAM, EigenCAM
 from pytorch_grad_cam.utils.model_targets import BinaryClassifierOutputTarget
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection_with_sign_correction
+import pytorch_grad_cam.eigen_cam as _eigen_cam_module
+from pytorch_grad_cam.utils import svd_on_activations as _svd
 
-
-class EigenCAMSC(EigenCAM):
-    def get_cam_image(self, input_tensor, target_layer, target_category, activations, grads, eigen_smooth):
-        return get_2d_projection_with_sign_correction(activations)
+# grad-cam 1.5.7 computes the full SVD (full_matrices=True) of the (h*w) x C activation matrix, i.e. also the unused
+# C x C right factor (2048 x 2048 for ResNet-50): ~0.36 s per image. Only the first right singular vector is used, and
+# the economy SVD returns the same vector, sign included (verified on 330 activation sets and in tests/test_core.py),
+# ~50x faster. The library function is replaced by the economy version; the original is kept for the tests.
+LIBRARY_GET_2D_PROJECTION = _svd.get_2d_projection
+LIBRARY_GET_2D_PROJECTION_SC = _svd.get_2d_projection_with_sign_correction
 
 
 def signed_projection(acts):
-    """Signed first-PC projection exactly as grad-cam's get_2d_projection, before ReLU. acts: (B, C, h, w)."""
+    """Signed first-PC projection as grad-cam's get_2d_projection (centring, first right singular vector), before ReLU."""
+    acts = np.array(acts, dtype=np.float32, copy=True); acts[np.isnan(acts)] = 0
     out = []
     for a in acts:
         r = a.reshape(a.shape[0], -1).T
         r = r - r.mean(axis=0)
-        _, _, vt = np.linalg.svd(r, full_matrices=True)
+        _, _, vt = np.linalg.svd(r, full_matrices=False)
         out.append((r @ vt[0]).reshape(a.shape[1:]))
-    return np.stack(out)
+    return np.float32(out)
+
+
+def signed_projection_sign_corrected(acts):
+    p = signed_projection(acts)
+    flip = np.abs(p.reshape(len(p), -1).min(1)) > np.abs(p.reshape(len(p), -1).max(1))
+    p[flip] = -p[flip]
+    return p
+
+
+_eigen_cam_module.get_2d_projection = signed_projection
+
+
+class EigenCAMSC(EigenCAM):
+    def get_cam_image(self, input_tensor, target_layer, target_category, activations, grads, eigen_smooth):
+        return signed_projection_sign_corrected(activations)
 
 
 class Explainer:
