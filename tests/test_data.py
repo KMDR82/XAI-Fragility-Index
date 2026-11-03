@@ -22,7 +22,11 @@ def _dicom(tmp_path, bits):
     yy, xx = np.mgrid[0:1024, 0:1024]
     img = (np.sin(xx / 37.0) * np.cos(yy / 53.0) * 0.4 + 0.5) * (2 ** bits - 1) + rng.normal(0, 3, (1024, 1024))
     ds.PixelData = np.clip(img, 0, 2 ** bits - 1).astype(dtype).tobytes()
-    fp = tmp_path / f"x{bits}.dcm"; ds.save_as(fp, enforce_file_format=True)
+    fp = tmp_path / f"x{bits}.dcm"
+    try:
+        ds.save_as(fp, enforce_file_format=True)      # pydicom >= 3
+    except TypeError:
+        ds.save_as(fp, write_like_original=False)     # pydicom 2.x (pinned 2.4.4)
     return fp
 
 
