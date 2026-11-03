@@ -221,3 +221,5 @@ _state/
 response/
 *:Zone.Identifier
 fig/phase1_v1/
+output/*
+!output/.gitkeep
