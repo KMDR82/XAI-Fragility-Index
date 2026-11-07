@@ -225,3 +225,5 @@ output/*
 !output/.gitkeep
 manuscript/
 preview/
+preview/
+*:Zone.Identifier
