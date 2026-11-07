@@ -1,0 +1,31 @@
+{
+  "title": "XAI Fragility Index (XFI): code for quantifying the structural fragility of explanation heatmaps in medical imaging",
+  "upload_type": "software",
+  "version": "v2.0.0",
+  "description": "Code accompanying the article \"Quantifying the structural fragility of explainable artificial intelligence in medical imaging: A novel index for assessing heatmap stability\" (submitted to PeerJ Computer Science). Release 2.0.0 contains the pipeline used for the revised article: four ResNet-50 classifiers on the RSNA Pneumonia Detection Challenge data, Grad-CAM and Eigen-CAM explanations under Gaussian noise, Gaussian blur and salt-and-pepper perturbations, the XAI Fragility Index, localization and background-activation measures, baselines, patient-level statistics, unit tests, notebooks and the figures of the article with their data. Model weights and per-patient results are archived in the companion data deposit.",
+  "creators": [
+    {
+      "name": "Akkaya, Ahmet",
+      "affiliation": "Bandırma Onyedi Eylül University",
+      "orcid": "0000-0003-4836-2310"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "explainable artificial intelligence",
+    "Grad-CAM",
+    "Eigen-CAM",
+    "robustness",
+    "chest radiography",
+    "pneumonia",
+    "medical imaging"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.DATA_RECORD",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}
