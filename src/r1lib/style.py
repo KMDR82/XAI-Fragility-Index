@@ -17,6 +17,10 @@ METHOD_COLORS = {"GradCAM": "#eb6834", "EigenCAM": "#2a78d6"}
 METHOD_LABELS = {"GradCAM": "Grad-CAM", "EigenCAM": "Eigen-CAM",
                  "Random_Baseline": "Random baseline", "Uniform_Baseline": "Uniform baseline"}
 METHOD_MARKERS = {"GradCAM": "o", "EigenCAM": "s"}
+# classifier identity (used only where the method is not the variable); validated with the dataviz palette
+# validator (light surface): lightness/chroma PASS, worst CVD pair 6.9 -> always paired with line style + marker
+MODEL_COLORS = {"A": "#6250d6", "Arep": "#eda100", "Anorm": "#1baf7a", "B": "#e34948"}
+MODEL_MARKERS = {"A": "o", "Arep": "^", "Anorm": "D", "B": "s"}
 METHODS = ["GradCAM", "EigenCAM"]
 TYPES = ["Gaussian", "Blur", "SaltPepper"]
 TYPE_LABELS = {"Gaussian": "Gaussian noise", "Blur": "Gaussian blur", "SaltPepper": "Salt-and-pepper"}
@@ -61,7 +65,8 @@ def _place_panel_labels(fig, gap_pt=3.0):
         if not hasattr(ax, "_r1_panel") or ax._r1_panel[1]:
             continue
         t, _ = ax._r1_panel
-        bottom_disp = ax.xaxis.get_tightbbox(r).y0 - gap_pt * fig.dpi / 72
+        bb = ax.xaxis.get_tightbbox(r)
+        bottom_disp = (bb.y0 if bb is not None else ax.get_window_extent(r).y0) - gap_pt * fig.dpi / 72
         default_disp = ax.transAxes.transform((0, PANEL_Y))[1]
         rows.setdefault(round(ax.get_position().y0, 3), []).append((ax, t, min(bottom_disp, default_disp)))
     for items in rows.values():

@@ -223,3 +223,5 @@ response/
 fig/phase1_v1/
 output/*
 !output/.gitkeep
+manuscript/
+preview/
