@@ -217,13 +217,13 @@ output/backup_history.log
 .ipynb_checkpoints/
 __pycache__/
 # private working material: never pushed to the public repo, backed up to Drive only (D-25)
-_state/
-response/
+/_state/
+/response/
 *:Zone.Identifier
 fig/phase1_v1/
 output/*
 !output/.gitkeep
-manuscript/
+/manuscript/
 preview/
 preview/
 *:Zone.Identifier
