@@ -24,7 +24,7 @@ The stored example maps of the runs are not included either, because they contai
 | `splits/` | frozen patient-level split: `split_train.csv`, `split_test.csv` (5,337 patients), `split_val.csv` (validation patients held out from the training set) and `split_train_fit.csv` (training set without them) |
 | `training/train_<model>/` | per-epoch validation metrics, validation and test probabilities, training summary (A-rep, A-norm, B) |
 | `tables/R*.csv` | analysis tables behind the manuscript (R1 classifier performance ... R18 XFI by prediction outcome) |
-| `config.yaml`, `requirements-r1.txt` | configuration and pinned package versions used for the run |
+| `config.yaml`, `requirements-r1.txt` | configuration and pinned package versions used for the run; in `config.yaml` the path of a local backup folder (`drive_backup_dir`), which does not affect any result, is replaced by `SET_ME`, so its SHA-256 differs from `config_sha256` in the manifests |
 | `SHA256SUMS.txt` | SHA-256 checksums of the files of this record (`sha256sum -c SHA256SUMS.txt` in the download folder) |
 
 All weights are PyTorch `state_dict`s of `torchvision.models.resnet50` with a single-logit output layer

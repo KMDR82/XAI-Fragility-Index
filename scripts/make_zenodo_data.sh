@@ -29,7 +29,9 @@ for m in Arep Anorm B; do
   done
 done
 cp output/phase4/R*.csv "$OUT/tables/"
-cp configs/config.yaml requirements-r1.txt "$OUT/"
+# the local backup folder is not part of the method; its value is blanked in the deposited copy
+sed -E 's#^(\s*drive_backup_dir:).*#\1 "SET_ME"#' configs/config.yaml > "$OUT/config.yaml"
+cp requirements-r1.txt "$OUT/"
 cp docs/DATA_README.md "$OUT/README.md"
 # checksums of the zip contents (inside the zip), then the zip, then checksums of the uploaded files
 (cd "$OUT" && find results splits training tables config.yaml requirements-r1.txt -type f -print0 | sort -z | xargs -0 sha256sum > CONTENTS_SHA256.txt)
