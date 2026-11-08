@@ -3,7 +3,7 @@
 Data deposit accompanying the article "Quantifying the structural fragility of explainable artificial intelligence
 in medical imaging: A novel index for assessing heatmap stability" (Ahmet Akkaya, submitted to PeerJ Computer Science).
 The code that produced every file is in https://github.com/KMDR82/XAI-Fragility-Index, release v2.0.0,
-which is archived on Zenodo as a new version of https://doi.org/10.5281/zenodo.19604732.
+archived on Zenodo at https://doi.org/10.5281/zenodo.24062874.
 
 The RSNA Pneumonia Detection Challenge images are not included; they can be obtained from
 https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge under the competition terms.

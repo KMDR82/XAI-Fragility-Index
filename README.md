@@ -22,7 +22,7 @@ boxes, prediction flips and five baselines.
 
 | Archive | Content | DOI |
 |---|---|---|
-| Code (this repository, v2.0.0) | pipeline, tests, notebooks, figures with their data | new version of [10.5281/zenodo.19604732](https://doi.org/10.5281/zenodo.19604732) |
+| Code (this repository, v2.0.0) | pipeline, tests, notebooks, figures with their data | [10.5281/zenodo.24062874](https://doi.org/10.5281/zenodo.24062874) |
 | Data | weights of the four classifiers, per-patient results, frozen splits, training logs, analysis tables, SHA-256 checksums | [10.5281/zenodo.24062114](https://doi.org/10.5281/zenodo.24062114) |
 
 Version 1.0.0 (the code of the original submission, `main.py` / `visualize.py`) remains available under the tag
@@ -82,7 +82,7 @@ Global seed: 42. Deterministic cuDNN settings are enforced in training and infer
 
 > A. Akkaya, "Quantifying the structural fragility of explainable artificial intelligence in medical imaging:
 > A novel index for assessing heatmap stability", submitted to *PeerJ Computer Science*, 2026.
-> Code: https://github.com/KMDR82/XAI-Fragility-Index, release v2.0.0 (archived on Zenodo). Data: https://doi.org/10.5281/zenodo.24062114.
+> Code: https://github.com/KMDR82/XAI-Fragility-Index, release v2.0.0, https://doi.org/10.5281/zenodo.24062874. Data: https://doi.org/10.5281/zenodo.24062114.
 
 See also `CITATION.cff`. The citation will be updated on publication.
 
