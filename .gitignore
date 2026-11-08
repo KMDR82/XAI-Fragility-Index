@@ -229,3 +229,4 @@ preview/
 *:Zone.Identifier
 zenodo_data/
 zenodo_results_tables.zip
+/scripts/scan_release.py

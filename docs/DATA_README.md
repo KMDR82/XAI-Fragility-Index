@@ -20,7 +20,7 @@ The stored example maps of the runs are not included either, because they contai
 | `zenodo_results_tables.zip` | everything below; `CONTENTS_SHA256.txt` inside the zip lists the checksums of its files |
 | `results/xfi_<model>/results_main.csv.gz` | one row per test patient x method x perturbation condition |
 | `results/xfi_<model>/results_base.csv.gz` | one row per test patient x baseline: `Random_Pixel`, `Random_Smooth`, `Uniform` (constant map), `CrossPatient_<method>` (`partner` = the other patient), `ModelRandom_<method>` (partially randomised model) |
-| `results/xfi_<model>/manifest.json` | run settings: weights SHA-256, decision threshold, git commit, config hash, outcome group sizes |
+| `results/xfi_<model>/manifest.json` | run settings: weights SHA-256, decision threshold, config hash, outcome group sizes, software versions (the `git` field is the development commit of the run; the same pipeline is published as release v2.0.0) |
 | `splits/` | frozen patient-level split: `split_train.csv`, `split_test.csv` (5,337 patients), `split_val.csv` (validation patients held out from the training set) and `split_train_fit.csv` (training set without them) |
 | `training/train_<model>/` | per-epoch validation metrics, validation and test probabilities, training summary (A-rep, A-norm, B) |
 | `tables/R*.csv` | analysis tables behind the manuscript (R1 classifier performance ... R18 XFI by prediction outcome) |

@@ -46,9 +46,10 @@ src/xfi/                  pipeline: data.py (split, image cache), perturb.py, xa
                           metrics.py (XFI, IoU, background activation), train.py, run_xfi.py
 src/r1lib/                statistics (patient-level tests, bootstrap, Holm) and figure style
 tests/                    unit tests (pytest)
-notebooks/                00 environment check, 01 audit of the version 1.0.0 results, 02 pilot,
-                          03 analysis (tables R1-R13), 04 figures, 05 sensitivity analyses (R14-R18)
-scripts/                  environment setup, RSNA download, training and XFI runs, packaging of the data deposit
+notebooks/                00 environment check, 02 pilot run, 03 analysis (tables R1-R13), 04 figures,
+                          05 sensitivity analyses (R14-R18)
+scripts/                  environment setup, RSNA download, training and XFI runs, numbers for the article,
+                          packaging of the data deposit
 fig/manuscript/           figures of the article (PNG, PDF, 300 dpi) and the data of every figure (CSV)
 ```
 
