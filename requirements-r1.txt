@@ -1,0 +1,21 @@
+# Pinned versions for the R1 revision (D-18). All versions checked on PyPI on 2026-11-02.
+# torch / torchvision are installed separately from the PyTorch CUDA index (see scripts/00_setup_env.sh):
+#   torch==2.6.0  torchvision==0.21.0  (CUDA 12.4 wheels)
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.14.1
+scikit-image==0.24.0
+scikit-learn==1.5.2
+opencv-python-headless==4.10.0.84
+pydicom==2.4.4
+matplotlib==3.9.2
+seaborn==0.13.2
+statsmodels==0.14.4
+grad-cam==1.5.7
+ttach==0.0.3
+tqdm==4.66.5
+pyyaml==6.0.2
+kaggle==2.2.5
+nbformat==5.10.4
+ipykernel==6.29.5
+pytest==8.3.3

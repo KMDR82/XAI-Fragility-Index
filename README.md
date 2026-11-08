@@ -1,62 +1,91 @@
 # Quantifying the Structural Fragility of Explainable Artificial Intelligence in Medical Imaging
 
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.6-EE4C2C)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 [![DOI](https://zenodo.org/badge/1212214151.svg)](https://doi.org/10.5281/zenodo.19604732)
 
-## 1. Description
-This repository contains the official codebase and implementation for the paper: **"Quantifying the Structural Fragility of Explainable Artificial Intelligence in Medical Imaging: A Novel Index for Assessing Heatmap Stability"**. 
+Code for the article **"Quantifying the structural fragility of explainable artificial intelligence in medical
+imaging: A novel index for assessing heatmap stability"** (Ahmet Akkaya, under review at PeerJ Computer Science).
 
-The objective of this study is to quantitatively evaluate the structural robustness of Explainable Artificial Intelligence (XAI) methods in clinical decision support systems. We propose a novel metric, the **XAI Fragility Index (XFI)**, which mathematically measures the degradation of XAI heatmaps under real-world radiological corruptions. The framework evaluates Grad-CAM and Eigen-CAM using a ResNet-50 classifier under strictly controlled stress tests including Gaussian Noise, Gaussian Blur, and Salt-and-Pepper perturbations.
+The **XAI Fragility Index (XFI)** measures how much an explanation heatmap changes when the input image is perturbed:
 
-## 2. Dataset Information
-The model was trained and evaluated using the publicly available **RSNA Pneumonia Detection Challenge** dataset.
-* **Total Patients:** 26,684 clinical chest X-ray (CXR) images.
-* **Data Splitting:** The dataset is split into 80% training and 20% testing sets at the patient ID level to strictly prevent data leakage.
-* **Labels:** Binary classification (Pneumonia vs. Normal) with bounding box coordinates for positive cases to evaluate localization shift (Intersection over Union - IoU).
+    RS  = (SSIM + r_p^norm + r_s^norm) / 3,   r^norm = (r + 1) / 2,   XFI = 1 - RS,   XFI in [0, 4/3]
 
-## 3. Repository Structure
-The repository is structured to ensure end-to-end reproducibility:
-* `main.py`: The primary orchestration script. Handles dataset loading, model inference, perturbation pipeline, and XFI computation.
-* `visualize.py`: Script to generate publication-ready (300 DPI) figures from the experimental results.
-* `plots/`: Contains all high-resolution figures and charts presented in the manuscript.
-* `logs/`: Contains the comprehensive experimental results. Large CSV files are provided in a compressed format (`.zip`) to comply with repository size constraints.
-* `requirements.txt`: Python dependencies.
+computed between the min-max normalised maps of the clean and the perturbed image. Unrelated maps give 2/3.
+The study applies XFI to Grad-CAM and Eigen-CAM explanations of four ResNet-50 pneumonia classifiers on the
+RSNA Pneumonia Detection Challenge test set (5,337 patients) under Gaussian noise, Gaussian blur and
+salt-and-pepper noise at three levels, and relates it to input degradation, localization against the expert
+boxes, prediction flips and five baselines.
 
-## 4. Requirements
-The project is built using Python 3.12. Required libraries:
-* `torch` (>= 2.0.0), `torchvision` (>= 0.15.0), `numpy`, `pandas`, `opencv-python`, `pydicom`, `scikit-learn`, `scipy`, `scikit-image`, `grad-cam`.
+## Release 2.0.0 (revision)
 
-## 5. Usage Instructions
-Follow these steps to replicate the study:
+| Archive | Content | DOI |
+|---|---|---|
+| Code (this repository, v2.0.0) | pipeline, tests, notebooks, figures with their data | new version of [10.5281/zenodo.19604732](https://doi.org/10.5281/zenodo.19604732) |
+| Data | weights of the four classifiers, per-patient results, frozen splits, training logs, analysis tables, SHA-256 checksums | [10.5281/zenodo.24062114](https://doi.org/10.5281/zenodo.24062114) |
 
-**Step 1: Data and Model Preparation**
-* **Dataset:** Download the RSNA dataset from [Kaggle](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge).
-* **Model Weights:** Download `best_pneumonia_model.pth` from [this Google Drive link](https://drive.google.com/file/d/1Ae31_XiP_SsvWOnnItbOiYKPmTH31b_o/view?usp=sharing) and place it in the root directory.
+Version 1.0.0 (the code of the original submission, `main.py` / `visualize.py`) remains available under the tag
+[`v1.0.0`](https://github.com/KMDR82/XAI-Fragility-Index/tree/v1.0.0) and on Zenodo
+([10.5281/zenodo.19604732](https://doi.org/10.5281/zenodo.19604732)).
 
-**Step 2: Environment Setup**
-```bash
-pip install -r requirements.txt
+## Classifiers
+
+| Model | Recipe | Decision threshold |
+|---|---|---|
+| A | ResNet-50 from scratch, 5 epochs, no ImageNet normalisation, unweighted loss | 0.5 |
+| A-rep | same recipe, trained on the training set without the validation split | validation (Youden) |
+| A-norm | as A-rep, with ImageNet normalisation | validation (Youden) |
+| B | ImageNet-pretrained, positive-class weight, early stopping on validation AUC | validation (Youden) |
+
+## Repository structure
+
+```
+configs/config.yaml       central configuration (paths, seed, split, perturbation levels)
+src/xfi/                  pipeline: data.py (split, image cache), perturb.py, xai.py (Grad-CAM, Eigen-CAM),
+                          metrics.py (XFI, IoU, background activation), train.py, run_xfi.py
+src/r1lib/                statistics (patient-level tests, bootstrap, Holm) and figure style
+tests/                    unit tests (pytest)
+notebooks/                00 environment check, 02 pilot run, 03 analysis (tables R1-R13), 04 figures,
+                          05 sensitivity analyses (R14-R18)
+scripts/                  environment setup, RSNA download, training and XFI runs, numbers for the article,
+                          packaging of the data deposit
+fig/manuscript/           figures of the article (PNG, PDF, 300 dpi) and the data of every figure (CSV)
 ```
 
-**Step 3: Execution**
-Run the main experiment script (Global seed `42` is enforced):
-```bash
-python main.py
-```
+## Reproducing the results
 
-**Step 4: Visualization and Results**
-* To regenerate figures: `python visualize.py`
-* **Note:** Raw experimental data and pre-generated figures are available in the `/logs` and `/plots` directories respectively.
+1. **Environment** (Linux or WSL2, CUDA GPU):
+   ```bash
+   bash scripts/00_setup_env.sh            # conda env "xfi": torch 2.6.0 / torchvision 0.21.0 (CUDA 12.4) + requirements-r1.txt
+   PYTHONPATH=src pytest -q tests
+   ```
+2. **Data**: download the RSNA Pneumonia Detection Challenge data from
+   [Kaggle](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge) (`bash scripts/01_download_rsna.sh`,
+   needs a Kaggle API token) into `dataset/rsna/`.
+3. **Splits and weights**: from the data deposit ([10.5281/zenodo.24062114](https://doi.org/10.5281/zenodo.24062114)), copy `splits/split_train.csv` and `split_test.csv` to
+   `output/phase0/`, `split_val.csv` and `split_train_fit.csv` to `output/phase2/`, and the weights to `model/`
+   (`model_A.pth` -> `modelA_kaggle_v1.pth`, `model_Arep.pth` -> `Arep_best.pth`, `model_Anorm.pth` -> `Anorm_best.pth`,
+   `model_B.pth` -> `B_best.pth`), and the `training/train_<model>/summary.json` files to `output/phase2/train_<model>/`
+   (they hold the decision thresholds). Check the downloaded files with `sha256sum -c SHA256SUMS.txt`, and the unpacked zip with `sha256sum -c CONTENTS_SHA256.txt`.
+   To retrain instead: `PYTHONPATH=src python -m xfi.train --model Arep` (likewise `Anorm`, `B`).
+4. **XFI runs** (one per classifier; interrupted runs resume, every random draw is keyed by seed, patient and condition):
+   ```bash
+   PYTHONPATH=src python -m xfi.run_xfi --model A      # likewise Arep, Anorm, B
+   ```
+5. **Analysis and figures**: run `notebooks/03_analysis.ipynb`, `04_figures.ipynb` and `05_sensitivity.ipynb`.
+   The per-patient results and tables of the deposit can be used directly instead of steps 3-4.
 
-## 6. Citation
-If you use this dataset, codebase, or the XFI metric in your research, please cite our paper (currently under review) and the Zenodo archive:
+Global seed: 42. Deterministic cuDNN settings are enforced in training and inference.
 
-> A. Akkaya, "Quantifying the Structural Fragility of Explainable Artificial Intelligence in Medical Imaging: A Novel Index for Assessing Heatmap Stability", *Submitted for publication*, 2026. 
-> Code archive: [![DOI](https://zenodo.org/badge/1212214151.svg)](https://doi.org/10.5281/zenodo.19604732)
+## Citation
 
-*(Note: The full citation details will be updated upon the paper's acceptance and publication).*
+> A. Akkaya, "Quantifying the structural fragility of explainable artificial intelligence in medical imaging:
+> A novel index for assessing heatmap stability", submitted to *PeerJ Computer Science*, 2026.
+> Code: https://github.com/KMDR82/XAI-Fragility-Index, release v2.0.0 (archived on Zenodo). Data: https://doi.org/10.5281/zenodo.24062114.
 
-## 7. License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+See also `CITATION.cff`. The citation will be updated on publication.
+
+## License
+
+Code: MIT (see `LICENSE`). Data deposit: CC BY 4.0. The RSNA images are subject to the terms of the Kaggle competition.

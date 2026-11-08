@@ -205,3 +205,28 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# ---- R1 revision (append to .gitignore) ----
+dataset/
+model/*.pth
+output/**/*.csv
+output/**/*.npz
+output/**/*.parquet
+output/backup_history.log
+.ipynb_checkpoints/
+__pycache__/
+# private working material: never pushed to the public repo, backed up to Drive only (D-25)
+/_state/
+/response/
+*:Zone.Identifier
+fig/phase1_v1/
+output/*
+!output/.gitkeep
+/manuscript/
+preview/
+preview/
+*:Zone.Identifier
+zenodo_data/
+zenodo_results_tables.zip
+/scripts/scan_release.py
