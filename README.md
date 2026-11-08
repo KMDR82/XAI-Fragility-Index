@@ -22,8 +22,8 @@ boxes, prediction flips and five baselines.
 
 | Archive | Content | DOI |
 |---|---|---|
-| Code (this repository, v2.0.0) | pipeline, tests, notebooks, figures with their data | CODE_DOI |
-| Data | weights of the four classifiers, per-patient results, frozen splits, training logs, analysis tables, SHA-256 checksums | DATA_DOI |
+| Code (this repository, v2.0.0) | pipeline, tests, notebooks, figures with their data | new version of [10.5281/zenodo.19604732](https://doi.org/10.5281/zenodo.19604732) |
+| Data | weights of the four classifiers, per-patient results, frozen splits, training logs, analysis tables, SHA-256 checksums | [10.5281/zenodo.24062114](https://doi.org/10.5281/zenodo.24062114) |
 
 Version 1.0.0 (the code of the original submission, `main.py` / `visualize.py`) remains available under the tag
 [`v1.0.0`](https://github.com/KMDR82/XAI-Fragility-Index/tree/v1.0.0) and on Zenodo
@@ -63,7 +63,7 @@ fig/manuscript/           figures of the article (PNG, PDF, 300 dpi) and the dat
 2. **Data**: download the RSNA Pneumonia Detection Challenge data from
    [Kaggle](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge) (`bash scripts/01_download_rsna.sh`,
    needs a Kaggle API token) into `dataset/rsna/`.
-3. **Splits and weights**: from the data deposit (DATA_DOI), copy `splits/split_train.csv` and `split_test.csv` to
+3. **Splits and weights**: from the data deposit ([10.5281/zenodo.24062114](https://doi.org/10.5281/zenodo.24062114)), copy `splits/split_train.csv` and `split_test.csv` to
    `output/phase0/`, `split_val.csv` and `split_train_fit.csv` to `output/phase2/`, and the weights to `model/`
    (`model_A.pth` -> `modelA_kaggle_v1.pth`, `model_Arep.pth` -> `Arep_best.pth`, `model_Anorm.pth` -> `Anorm_best.pth`,
    `model_B.pth` -> `B_best.pth`), and the `training/train_<model>/summary.json` files to `output/phase2/train_<model>/`
@@ -82,7 +82,7 @@ Global seed: 42. Deterministic cuDNN settings are enforced in training and infer
 
 > A. Akkaya, "Quantifying the structural fragility of explainable artificial intelligence in medical imaging:
 > A novel index for assessing heatmap stability", submitted to *PeerJ Computer Science*, 2026.
-> Code: CODE_DOI. Data: DATA_DOI.
+> Code: https://github.com/KMDR82/XAI-Fragility-Index, release v2.0.0 (archived on Zenodo). Data: https://doi.org/10.5281/zenodo.24062114.
 
 See also `CITATION.cff`. The citation will be updated on publication.
 
